@@ -15,15 +15,16 @@ export async function registerRoutes(
 Return ONLY valid JSON in this exact format, with no markdown formatting or other text:
 [{"icon": "🏃", "title": "Task name", "description": "Short description"}]`;
 
-      const response = await fetch("https://api.anthropic.com/v1/messages", {
+      const response = await fetch("https://openrouter.io/api/v1/chat/completions", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "x-api-key": process.env.ANTHROPIC_API_KEY || "",
-          "anthropic-version": "2023-06-01"
+          "Authorization": `Bearer ${process.env.OPENROUTER_API_KEY || ""}`,
+          "HTTP-Referer": "https://replit.com",
+          "X-Title": "Daily Challenge Generator"
         },
         body: JSON.stringify({
-          model: "claude-sonnet-4-20250514", // As requested by user
+          model: "openai/gpt-3.5-turbo", // Free model via OpenRouter
           max_tokens: 1024,
           messages: [
             { role: "user", content: prompt }
@@ -33,12 +34,12 @@ Return ONLY valid JSON in this exact format, with no markdown formatting or othe
 
       if (!response.ok) {
         const errorText = await response.text();
-        console.error("Anthropic API Error:", errorText);
-        throw new Error(`Anthropic API error: ${response.status}`);
+        console.error("OpenRouter API Error:", errorText);
+        throw new Error(`OpenRouter API error: ${response.status}`);
       }
 
       const data = await response.json();
-      const content = data.content?.[0]?.text || "[]";
+      const content = data.choices?.[0]?.message?.content || "[]";
       
       let tasks;
       try {
