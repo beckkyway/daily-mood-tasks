@@ -1,18 +1,22 @@
-import { sql } from "drizzle-orm";
-import { pgTable, text, varchar } from "drizzle-orm/pg-core";
-import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
-export const users = pgTable("users", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  username: text("username").notNull().unique(),
-  password: text("password").notNull(),
-});
+export const energyLevelSchema = z.enum(["low", "medium", "high"]);
+export type EnergyLevel = z.infer<typeof energyLevelSchema>;
 
-export const insertUserSchema = createInsertSchema(users).pick({
-  username: true,
-  password: true,
+export const taskSchema = z.object({
+  icon: z.string(),
+  title: z.string(),
+  description: z.string(),
+  completed: z.boolean().optional().default(false),
 });
+export type Task = z.infer<typeof taskSchema>;
 
-export type InsertUser = z.infer<typeof insertUserSchema>;
-export type User = typeof users.$inferSelect;
+export const generateChallengeRequestSchema = z.object({
+  energyLevel: energyLevelSchema,
+});
+export type GenerateChallengeRequest = z.infer<typeof generateChallengeRequestSchema>;
+
+export const generateChallengeResponseSchema = z.object({
+  tasks: z.array(taskSchema),
+});
+export type GenerateChallengeResponse = z.infer<typeof generateChallengeResponseSchema>;
