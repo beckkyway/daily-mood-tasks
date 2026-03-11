@@ -11,9 +11,9 @@ export async function registerRoutes(
     try {
       const { energyLevel } = api.challenges.generate.input.parse(req.body);
 
-      const prompt = `Generate 3 fun micro-tasks tailored to a '${energyLevel}' energy level / mood.
-Return ONLY valid JSON in this exact format, with no markdown formatting or other text:
-[{"icon": "🏃", "title": "Task name", "description": "Short description"}]`;
+      const prompt = `Сгенерируй 3 весёлых микротаска, подходящих для уровня энергии '${energyLevel}' (low=низкий, medium=средний, high=высокий).
+Верни ТОЛЬКО валидный JSON в таком формате, без markdown и других текстов:
+[{"icon": "🏃", "title": "Название задачи", "description": "Короткое описание"}]`;
 
       const apiKey = process.env.GOOGLE_API_KEY || "";
       if (!apiKey) {
@@ -21,7 +21,7 @@ Return ONLY valid JSON in this exact format, with no markdown formatting or othe
       }
 
       const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
+        `https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
         {
           method: "POST",
           headers: {
@@ -48,7 +48,9 @@ Return ONLY valid JSON in this exact format, with no markdown formatting or othe
       if (!response.ok) {
         const errorText = await response.text();
         console.error("Google Gemini API Error:", errorText);
-        throw new Error(`Google Gemini API error: ${response.status} - ${errorText}`);
+        throw new Error(
+          `Google Gemini API error: ${response.status} - ${errorText}`,
+        );
       }
 
       const data = await response.json();
