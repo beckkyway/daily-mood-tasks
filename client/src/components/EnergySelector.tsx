@@ -8,16 +8,16 @@ interface EnergySelectorProps {
 }
 
 const options: { level: EnergyLevel; label: string; icon: string; color: string }[] = [
-  { level: "low", label: "Low", icon: "😴", color: "bg-blue-100 text-blue-700 border-blue-200" },
-  { level: "medium", label: "Medium", icon: "😊", color: "bg-orange-100 text-orange-700 border-orange-200" },
-  { level: "high", label: "High", icon: "⚡", color: "bg-pink-100 text-pink-700 border-pink-200" },
+  { level: "low", label: "Низкая", icon: "😴", color: "bg-blue-100 text-blue-700 border-blue-200" },
+  { level: "medium", label: "Средняя", icon: "😊", color: "bg-orange-100 text-orange-700 border-orange-200" },
+  { level: "high", label: "Высокая", icon: "⚡", color: "bg-pink-100 text-pink-700 border-pink-200" },
 ];
 
 export function EnergySelector({ value, onChange, disabled }: EnergySelectorProps) {
   return (
     <div className="space-y-4 w-full">
       <label className="block text-center text-sm font-semibold text-muted-foreground uppercase tracking-wider">
-        How are you feeling today?
+        Как ты себя чувствуешь?
       </label>
       <div className="grid grid-cols-3 gap-3">
         {options.map((option) => {

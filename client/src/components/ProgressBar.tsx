@@ -13,7 +13,7 @@ export function ProgressBar({ completed, total }: ProgressBarProps) {
     <div className="w-full space-y-2">
       <div className="flex justify-between items-end px-1">
         <span className="text-sm font-bold text-muted-foreground font-display uppercase tracking-wide">
-          Your Progress
+          Ваш прогресс
         </span>
         <motion.span 
           key={completed}

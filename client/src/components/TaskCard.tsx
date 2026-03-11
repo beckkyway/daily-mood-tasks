@@ -66,7 +66,7 @@ export function TaskCard({ task, index, onToggle }: TaskCardProps) {
               : 'bg-secondary text-muted-foreground hover:bg-primary/10 hover:text-primary'
             }
           `}
-          aria-label={isCompleted ? "Mark as incomplete" : "Mark as complete"}
+          aria-label={isCompleted ? "Отметить как невыполненно" : "Отметить как выполненно"}
         >
           {isCompleted ? (
             <motion.div

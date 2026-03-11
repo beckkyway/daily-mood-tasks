@@ -85,10 +85,10 @@ export default function Home() {
             <Sparkles className="w-8 h-8" />
           </motion.div>
           <h1 className="text-4xl font-extrabold text-foreground mb-2">
-            Daily <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">Spark</span>
+            Ежедневная <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">Искра</span>
           </h1>
           <p className="text-muted-foreground text-lg">
-            Tiny missions to brighten your day.
+            Маленькие задачи для больших побед.
           </p>
         </header>
 
@@ -128,11 +128,11 @@ export default function Home() {
                       <motion.span animate={{ y: [0, -8, 0] }} transition={{ repeat: Infinity, duration: 0.6, delay: 0.2 }} className="w-2 h-2 bg-white rounded-full block" />
                       <motion.span animate={{ y: [0, -8, 0] }} transition={{ repeat: Infinity, duration: 0.6, delay: 0.4 }} className="w-2 h-2 bg-white rounded-full block" />
                     </div>
-                    <span>Brewing magic...</span>
+                    <span>Колдую магию...</span>
                   </>
                 ) : (
                   <>
-                    <span>Generate My Day</span>
+                    <span>Создать мой день</span>
                     <Sparkles className="w-5 h-5" />
                   </>
                 )}
@@ -174,7 +174,7 @@ export default function Home() {
               >
                 {isAllDone && (
                   <div className="text-center p-4 bg-green-50 text-green-700 rounded-2xl font-bold font-display animate-bounce">
-                    🎉 You crushed it today! 🎉
+                    🎉 Ты потрясающий сегодня! 🎉
                   </div>
                 )}
                 
@@ -187,7 +187,7 @@ export default function Home() {
                   "
                 >
                   <RefreshCw className="w-4 h-4" />
-                  <span>Start Over</span>
+                  <span>Начать заново</span>
                 </button>
               </motion.div>
             </motion.div>
