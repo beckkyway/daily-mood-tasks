@@ -15,32 +15,44 @@ export async function registerRoutes(
 Return ONLY valid JSON in this exact format, with no markdown formatting or other text:
 [{"icon": "🏃", "title": "Task name", "description": "Short description"}]`;
 
+      const apiKey = process.env.GOOGLE_API_KEY || "";
+      if (!apiKey) {
+        throw new Error("GOOGLE_API_KEY is not set");
+      }
+
       const response = await fetch(
-        "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions",
+        `https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${process.env.GOOGLE_API_KEY || ""}`,
-            "HTTP-Referer": "https://replit.com",
-            "X-Title": "Daily Challenge Generator",
           },
           body: JSON.stringify({
-            model: "gemini-2.5-flash", // Free model via OpenRouter
-            max_tokens: 1024,
-            messages: [{ role: "user", content: prompt }],
+            contents: [
+              {
+                parts: [
+                  {
+                    text: prompt,
+                  },
+                ],
+              },
+            ],
+            generationConfig: {
+              maxOutputTokens: 1024,
+              temperature: 0.7,
+            },
           }),
         },
       );
 
       if (!response.ok) {
         const errorText = await response.text();
-        console.error("OpenRouter API Error:", errorText);
-        throw new Error(`OpenRouter API error: ${response.status}`);
+        console.error("Google Gemini API Error:", errorText);
+        throw new Error(`Google Gemini API error: ${response.status} - ${errorText}`);
       }
 
       const data = await response.json();
-      const content = data.choices?.[0]?.message?.content || "[]";
+      const content = data.candidates?.[0]?.content?.parts?.[0]?.text || "[]";
 
       let tasks;
       try {
@@ -50,7 +62,7 @@ Return ONLY valid JSON in this exact format, with no markdown formatting or othe
         if (jsonMatch) {
           tasks = JSON.parse(jsonMatch[0]);
         } else {
-          throw new Error("Failed to parse JSON from Anthropic response");
+          throw new Error("Failed to parse JSON from Google Gemini response");
         }
       }
 
