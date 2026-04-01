@@ -45,8 +45,8 @@
 ### 1. Клонируй репозиторий
 
 ```bash
-git clone https://github.com/beckkyway/replit.git
-cd replit
+git clone https://github.com/beckkyway/daily-mood-tasks.git
+cd daily-mood-tasks
 ```
 
 ### 2. Установи зависимости
